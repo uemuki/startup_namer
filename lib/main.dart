@@ -109,7 +109,8 @@ class _FlutterLayoutArticleState extends State<FlutterLayoutArticle> {
                             constraints: BoxConstraints.tightFor(
                                 width: double.infinity,
                                 height: double.infinity),
-                            child: widget.examples[count - 1])),
+                            child: widget.examples[count -
+                                1])), // widget.examples 即 FlutterLayoutArticle 中的 examples
                     Container(
                       height: 50,
                       width: double.infinity,
