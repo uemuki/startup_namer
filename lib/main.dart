@@ -1,15 +1,32 @@
 import 'package:flutter/material.dart';
 
+final ThemeData kIOSTheme = new ThemeData(
+  primarySwatch: Colors.orange,
+  primaryColor: Colors.grey[100],
+  primaryColorBrightness: Brightness.light,
+);
+
+final ThemeData kDefaultTheme = new ThemeData(
+  primarySwatch: Colors.purple,
+  accentColor: Colors.orangeAccent[400],
+);
+
+const String _name = "邈邈";
+
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+  ThemeData defaultTargetPlatform;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Friendlychat",
+      theme: defaultTargetPlatform == TargetPlatform.iOS
+          ? kIOSTheme
+          : kDefaultTheme,
       home: new ChatScreen(),
     );
   }
@@ -23,9 +40,13 @@ class ChatScreen extends StatefulWidget {
 class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   final List<ChatMessage> _messages = <ChatMessage>[];
   final TextEditingController _textController = new TextEditingController();
+  bool _isComposing = false;
 
   void _handleSubmitted(String text) {
     _textController.clear();
+    setState(() {
+      _isComposing = false;
+    });
     ChatMessage message = new ChatMessage(
       text: text,
       animationController: new AnimationController(
@@ -39,19 +60,23 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     message.animationController.forward();
   }
 
-  void onPressed() {
-    _handleSubmitted(_textController.text);
-  }
-
   Widget _buildTextComposer() {
-    return new Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: new TextField(
-        controller: _textController,
-        onSubmitted: _handleSubmitted,
-        decoration: new InputDecoration.collapsed(hintText: "Send a message"),
-      ),
-    );
+    return new IconTheme(
+        data: new IconThemeData(color: Theme.of(context).accentColor),
+        child: new Container(
+          margin: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: new TextField(
+            controller: _textController,
+            onChanged: (String text) {
+              setState(() {
+                _isComposing = text.length > 0;
+              });
+            },
+            onSubmitted: _handleSubmitted,
+            decoration:
+                new InputDecoration.collapsed(hintText: "Send a message"),
+          ),
+        ));
   }
 
   @override
@@ -64,7 +89,10 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(title: new Text("Friendlychat")),
+      appBar: new AppBar(
+        title: new Text("Friendlychat"),
+        elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
+      ),
       body: Column(
         children: [
           new Flexible(
@@ -87,7 +115,9 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                             Icons.send,
                             color: Theme.of(context).iconTheme.color,
                           ),
-                          onPressed: onPressed))
+                          onPressed: _isComposing
+                              ? () => _handleSubmitted(_textController.text)
+                              : null))
                 ],
               ) //modified
               ),
@@ -96,8 +126,6 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     );
   }
 }
-
-const String _name = "邈邈";
 
 class ChatMessage extends StatelessWidget {
   ChatMessage({this.text = '', @required this.animationController});
