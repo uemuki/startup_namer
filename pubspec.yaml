@@ -27,11 +27,21 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
-  english_words: ^3.1.0
+  provider: ^4.3.2+2
+  json_annotation: 3.1.1
+  dio: 3.0.10
+  dokit: 0.2.5
+  pull_to_refresh: ^1.6.1
+  #ui
+  oktoast: ^2.3.2
+  shimmer: 1.1.2
 
 dev_dependencies:
+  test:
   flutter_test:
     sdk: flutter
+  json_serializable: 3.5.1
+  build_runner: 1.10.11
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -42,6 +52,14 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  fonts:
+    - family: iconfont
+      fonts:
+        - asset: assets/fonts/iconfont.ttf
+    - family: kuaile # 测试字体
+      fonts:
+        - asset: assets/fonts/ZCOOLKuaiLe-Regular.ttf
 
   # To add assets to your application, add an assets section, like this:
   assets:
