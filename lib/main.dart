@@ -1,5 +1,15 @@
 import 'package:flutter/material.dart';
 
+// Avoid errors caused by flutter upgrade.
+import 'package:flutter/widgets.dart';
+import './db/demo.dart';
+
+// for socket
+import 'package:flutter_simple_dependency_injection/injector.dart';
+import 'package:startup_namer/model/app_initializer.dart';
+import 'package:startup_namer/model/dependency_injection.dart';
+import 'package:startup_namer/model/socket_service.dart';
+
 final ThemeData kIOSTheme = new ThemeData(
   primarySwatch: Colors.orange,
   primaryColor: Colors.grey[100],
@@ -13,7 +23,30 @@ final ThemeData kDefaultTheme = new ThemeData(
 
 const String _name = "邈邈";
 
-void main() {
+Injector injector;
+
+void main() async {
+  // dbDemo();
+
+  DependencyInjection().initialise(Injector());
+  injector = Injector();
+  await AppInitializer().initialise(injector);
+
+  final SocketService socketService = injector.get<SocketService>();
+  print('before connection');
+  socketService.createSocketConnection();
+  print('getchat res1');
+  Future.delayed(Duration(seconds: 5), () async {
+    final res = await socketService.getChat('5f168e02305e6603e2bc125a');
+    print('getchat res2: $res');
+  });
+  Future.delayed(Duration(seconds: 10), () => socketService.close());
+  // final socketConnectRes = await socketService.createSocketConnection();
+  // print('socketConnectRes: $socketConnectRes');
+  // if (socketConnectRes) {
+  //   socketService.getChat('5f168e02305e6603e2bc125a');
+  // }
+
   runApp(MyApp());
 }
 
@@ -60,7 +93,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     message.animationController.forward();
   }
 
-  Widget _buildTextComposer() {
+  Widget _buildTextComposer(BuildContext context) {
     return new IconTheme(
         data: new IconThemeData(color: Theme.of(context).accentColor),
         child: new Container(
@@ -107,7 +140,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
               decoration: new BoxDecoration(color: Theme.of(context).cardColor),
               child: Row(
                 children: [
-                  Expanded(child: _buildTextComposer()),
+                  Expanded(child: _buildTextComposer(context)),
                   Padding(
                       padding: EdgeInsets.symmetric(horizontal: 4),
                       child: IconButton(

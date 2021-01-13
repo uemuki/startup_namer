@@ -69,11 +69,25 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_simple_dependency_injection:
+    dependency: "direct main"
+    description:
+      name: flutter_simple_dependency_injection
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.4"
   flutter_test:
     dependency: "direct dev"
     description: flutter
     source: sdk
     version: "0.0.0"
+  logging:
+    dependency: transitive
+    description:
+      name: logging
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.11.4"
   matcher:
     dependency: transitive
     description:
@@ -89,7 +103,7 @@ packages:
     source: hosted
     version: "1.3.0-nullsafety.6"
   path:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path
       url: "https://pub.flutter-io.cn"
@@ -100,6 +114,20 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  socket_io_client:
+    dependency: "direct main"
+    description:
+      name: socket_io_client
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.9.12"
+  socket_io_common:
+    dependency: transitive
+    description:
+      name: socket_io_common
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.9.2"
   source_span:
     dependency: transitive
     description:
@@ -107,6 +135,20 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.8.0-nullsafety.4"
+  sqflite:
+    dependency: "direct main"
+    description:
+      name: sqflite
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.3.2+2"
+  sqflite_common:
+    dependency: transitive
+    description:
+      name: sqflite_common
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.3"
   stack_trace:
     dependency: transitive
     description:
@@ -128,6 +170,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.1.0-nullsafety.3"
+  synchronized:
+    dependency: transitive
+    description:
+      name: synchronized
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.2.0+2"
   term_glyph:
     dependency: transitive
     description:
@@ -158,3 +207,4 @@ packages:
     version: "2.1.0-nullsafety.5"
 sdks:
   dart: ">=2.12.0-0.0 <3.0.0"
+  flutter: ">=1.22.2 <2.0.0"
